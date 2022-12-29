@@ -1,0 +1,56 @@
+version: '3'
+services:
+  nginx:
+    build: ./nginx/
+    container_name: nginx_container
+    ports:
+      - 80:80
+    links:
+      - php
+    volumes:
+      - ./src/:/var/www/html/
+      #- app-data
+   
+  php:
+      # image: php:7.0-fpm
+      build: ./php/
+      container_name: php_container
+      expose:
+        - 9000
+      volumes:
+         - ./src/:/var/www/html/
+        # - app-data
+      links:
+        - mysql
+
+  app-data:    
+      image: php:7.0-fpm  
+      container_name: app_data_container  
+      volumes:  
+       - ./src/:/var/www/html/  
+      command: "true" 
+
+  mysql:
+      image: mysql:5.7
+      container_name: mysql_container
+      volumes_from:
+        - mysql-data
+      environment:
+        MYSQL_ROOT_PASSWORD: secret
+        MYSQL_DATABASE: mydb
+        MYSQL_USER: myuser
+        MYSQO_PASSWORD: password
+   
+      #mysql-data:
+      #image: mysql:5.7
+      #container_name: mysql_data_container
+      #volumes:
+      #  - /var/lib/mysql
+      #command: "true"
+   
+  mysql-data:    
+      image: mysql:5.7  
+      container_name: mysql-data-container  
+      volumes:  
+       - /var/lib/mysql  
+      command: "true"
