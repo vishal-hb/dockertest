@@ -5,7 +5,7 @@
 	</head>
 	
 	<body>
-		<h1>Hello World! This is updated Files form host</h1>
+		<h1>Hello World! This is updated for logal git</h1>
 		<p><? echo 'We are running PHP, versio: ' . phpversion();  ?></p>
 	</body>
 </html>
